@@ -1,0 +1,39 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<div class="admin-wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="{% url 'manage_post' %}">Manage Posts</a></li>
+            <li><a href="{% url 'manage_user' %}">Manage Users</a></li>
+            <li><a href="{% url 'manage_topic' %}">Manage Topics</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="{% url 'add_topic' %}" class="btn btn-big admin">Add Topic</a>
+            <a href="{% url 'manage_topic' %}" class="btn btn-big admin">Manage Topics</a>
+        </div>
+        <div class="content">
+            <h2 class="page-title">Manage Topics</h2>
+            <form action="{% url 'add_topic' %}" method="post">
+                {% csrf_token %}
+                <div>
+                    <label>Title</label>
+                    <input type="text" name = "title" class="text-input">
+                </div>
+                <div>
+                    <span>Description</span>
+                    <textarea name="description" id = "body" row ="2"></textarea>
+                </div>
+                <div>
+                <button type="submit" class="btn btn-bit">Add Topic</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Page Wrapper -->
+
+{% endblock %}

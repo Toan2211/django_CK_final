@@ -1,0 +1,49 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<div class="admin-wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="{% url 'manage_post' %}">Manage Posts</a></li>
+            <li><a href="{% url 'manage_user' %}">Manage Users</a></li>
+            <li><a href="{% url 'manage_topic' %}">Manage Topics</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="{% url 'add_user' %}" class="btn btn-big admin">Add User</a>
+            <a href="{% url 'manage_user' %}" class="btn btn-big admin">Manage Users</a>
+        </div>
+        <div class="content">
+            <h2 class="page-title">Manage Users</h2>
+            <form action="create.html" method="post"></form>
+            <div>
+                <label>Username</label>
+                <input type="text" name="username" class="text-input">
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" class="text-input">
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" class="text-input">
+            </div>
+            <div>
+                <label>Password Confirmation</label>
+                <input type="password" name="passwordConf" class="text-input">
+            </div>
+                <div>
+                    <label>Role</label>
+                    <select name="topic" class="text-input">
+                        <option value="Entertainment">Admin</option>
+                        <option value="Music">Author</option>
+                    </select>
+                </div>
+                <div>
+                <button type="submit" class="btn btn-bit">Add User</button>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

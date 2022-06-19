@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+<!-- Content section -->
+    <div class="content clearfix">
+        <div class="main-content single">
+          <h1 class="post-title">{{data.title}}</h1>
+            <div class="post-content">
+                <p>{{data.content | safe }}</p>
+            </div>
+        </div>
+        
+        <div class="sidebar single">
+            <div class="section popular">
+                <h2 class="section-title">Popular</h2>
+                {% for i in popular_post %}
+                <div class="post clearfix">
+                    <img src="{{i.fetured_image.url}}" alt="">
+                    <a href="{% url 'blog' i.id%}" class="title"><h4>{{i.title}}</h4></a>
+                </div>
+                {% endfor %}
+                
+            </div>
+            
+            <div class="section topic">
+                <h2 class="section-title">Topics</h2>
+                <ul>
+                    {% for i in topic %}
+                    <li><a href="">{{i.name}}</a></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+<!-- End Page Wrapper -->
+{% endblock %}

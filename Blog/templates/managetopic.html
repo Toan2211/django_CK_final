@@ -1,0 +1,46 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<div class="admin-wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="{% url 'manage_post' %}">Manage Posts</a></li>
+            <li><a href="{% url 'manage_user' %}">Manage Users</a></li>
+            <li><a href="{% url 'manage_topic' %}">Manage Topics</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="{% url 'add_topic' %}" class="btn btn-big admin">Add Topic</a>
+            <a href="{% url 'manage_topic' %}" class="btn btn-big admin">Manage Topics</a>
+        </div>
+        <div class="content">
+            <h2 class="page-title">Manage Topics</h2>
+            <table>
+            <thead>
+                <th>N</th>
+                <th>Name</th>
+                <th colspan="2">Action</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Toan1</td>
+                    <td><a href="#" class="edit">Edit</a></td>
+                    <td><a href="#" class="delete">Delete</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Toan2</td>
+                    <td><a href="#" class="edit">Edit</a></td>
+                    <td><a href="#" class="delete">Delete</a></td>
+                </tr>
+                
+            </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

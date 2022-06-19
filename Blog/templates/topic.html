@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-wrapper ">
+    <!-- Content section -->
+    <div class="content clearfix">
+        <div class="main-content">
+            <h1 class="recent-post-title">{{title}}</h1>
+            {% for i in rs %}
+            <div class="post clearfix">
+                <img src="{{i.fetured_image.url}}" alt="" class="post-img">
+                <div class="post-preview">
+                    <h2><a href="{% url 'blog' i.id%}">{{i.title}}</a></h2>
+                    <i class="fa fa-user">{{i.author}}</i>
+                    &nbsp;
+                    <i class="fa fa-calendar"> {{i.date}}</i>
+                    <br>
+                    <p class="">{{i.content | safe | truncatechars:200 }}</p>
+                    <a href="{% url 'blog' i.id%}" class="btn read-more"> Read more</a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                
+                <li class="page-item previous-page {% if page == 1 %} disable {% endif %}"><a class = "page-link" href="{% url 'topic' pk previous %}">Prev</a></li>                
+                {% for i in page_list %}
+                    {% if i == page %}
+                <li class="page-item current-page active"><a class = "page-link selected" href="{% url 'topic' pk i %}">{{i}}</a></li>
+                    {% else %}
+                <li class="page-item current-page"><a class = "page-link" href="{% url 'topic' pk i %}">{{i}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item next-page {% if page_list|length == page %} disable {% endif %}"><a class = "page-link" href="{% url 'topic' pk next %}">Next</a></li>
+            </div>
+
+
+        </div>
+
+        <div class="sidebar">
+            <div class="section search">
+                <h2 class="section-title">Search</h2>
+                <form action="index.html" method="post">
+                    <input type="text" name="search-term" class="text-input" placeholder="Search....">
+
+                </form>
+            </div>
+            <div class="section topic">
+                <h2 class="section-title">Topics</h2>
+                <ul>
+                    <li><a href="">Entertainment</a></li>
+                    <li><a href="">Entertainment</a></li>
+                    <li><a href="">Entertainment</a></li>
+                    <li><a href="">Entertainment</a></li>
+                    <li><a href="">Entertainment</a></li>
+                    <li><a href="">Entertainment</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- End conten section -->
+</div>
+{% endblock %}

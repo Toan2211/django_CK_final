@@ -1,0 +1,135 @@
+/* Responsive */
+
+
+@media only screen and (max-width: 934px) {
+    .content{
+        width: 100%;
+    }
+    .auth-content{
+        width: 50%;
+    }
+
+    .content .main-content{
+        width: 100%;
+    }
+    .content .sidebar{
+        width: 100%;
+    }
+    .content.size{
+        height: 2200px;
+        margin-bottom: -150px;
+    }   
+    .content .sidebar .section.search{
+        margin-top: 33.4px;
+    }
+    .post-slider .prev{
+        left: 40px;
+    }
+    .post-slider .next{
+        right: 40px;
+    }
+    .footer{
+        height: auto;
+    }
+    .footer .footer-content{
+        height: auto;
+        flex-direction: column;
+    }
+    .footer .footer-content .links{
+        display: flex;
+        flex-direction: column;
+        margin: 0 0;
+    }
+    .footer .footer-content .links .col{
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .footer .footer-content .links ul a{
+        display: block;
+        margin-bottom: 0px;
+    }
+    .footer .footer-content .footer-section{
+        padding: 10px;
+    }
+    .btn-big{
+        margin-top: 20px;
+        width: 100%;
+    }
+    .footer .footer-content .contact-form{
+        padding-bottom: 70px;
+    }
+}
+@media only screen and (max-width: 750px) {
+header{
+    position: relative;
+}
+header ul{
+    width: 100%;
+    background: #0e94a0;
+    max-height: 0px;
+    overflow: hidden;
+}
+.showing{
+    max-height: 100em;
+}
+header ul li{
+    width: 100%;
+}
+header ul li ul{
+    position: static;
+    display: block;
+    width: 100%;
+    background: inherit;
+}
+header ul li ul li a{
+    padding: 10px;
+    background: #0e94a0;
+    color: white;
+    padding-left: 50px;
+}
+header ul li ul li .logout{
+    color: red;
+}
+header .menu-toggle{
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 25px;
+}
+}
+@media only screen and (max-width: 600px) {
+    .content.size{
+        height: 3350px;
+    } 
+    .auth-content{
+        width: 80%;
+    }
+    .content .main-content .post{
+        height: auto;
+    }
+    .content .main-content .post .post-img{
+        width: 100%;
+    }
+    .content .main-content .post .post-preview{
+        width: 100%;
+    }
+    .content .main-content .post .read-more{
+        margin-top: 10px;
+        position: static;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    .post-slider .next,
+    .post-slider .prev{
+        visibility:hidden; 
+    }
+    .content.single{
+        height: 3200px;
+    }
+
+
+
+
+}
