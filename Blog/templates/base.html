@@ -33,12 +33,20 @@
             <li><a href="">Login</a></li> -->
             <li><a href="#">
                 <i class="fa fa-user"></i>
-                Thanh Toan
+                {% if request.user.is_authenticated %}
+                Hello, {{user.username}}
+                {% else %}
+                Login
+                {% endif %}
                 <i class="fa fa-chevron-down"></i>
             </a>
                 <ul>
+                    {% if user.is_authenticated %}
                     <li><a href="{% url 'manage_post' %}">Dashboard</a></li>
-                    <li><a href="{% url 'logout' %}" class="logout">Log Out</a></li>                   
+                    <li><a href="{% url 'logout' %}" class="logout">Log Out</a></li>    
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="login">Login</a></li>  
+                    {% endif %}               
                 </ul>
             
             

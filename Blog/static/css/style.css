@@ -127,6 +127,7 @@ header ul li a:hover{
 /* post-slider */
 .page-wrapper{
     margin-top: 20px;
+    min-height: 500px;
 }
 .page-wrapper a:hover{
     color: #006669;
@@ -489,4 +490,6 @@ header ul li a:hover{
     background: #ccc;
     cursor: pointer;
 }
+
+
 

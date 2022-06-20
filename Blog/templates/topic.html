@@ -47,12 +47,9 @@
             <div class="section topic">
                 <h2 class="section-title">Topics</h2>
                 <ul>
-                    <li><a href="">Entertainment</a></li>
-                    <li><a href="">Entertainment</a></li>
-                    <li><a href="">Entertainment</a></li>
-                    <li><a href="">Entertainment</a></li>
-                    <li><a href="">Entertainment</a></li>
-                    <li><a href="">Entertainment</a></li>
+                    {% for i in topic %}
+                    <li><a href="{% url 'topic' i.id %}">{{i.name}}</a></li>
+                    {% endfor %}   
                 </ul>
 
             </div>
