@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from ckeditor.fields import RichTextField
+from spacy import blank
+from sqlalchemy import null
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
@@ -20,10 +22,10 @@ class Post(models.Model):
         ('Trending','Trending'),
         ('Popular','Popular'),
     )
-    fetured_image = models.ImageField(upload_to = 'Images')
+    fetured_image = models.ImageField(upload_to = 'Images/', null=True,blank = True)
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
-    category = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    category = models.ForeignKey(Topic, on_delete=models.CASCADE,null=True,blank=True)
     date = models.DateField(auto_now_add=True)
     content = RichTextField()
     slug = models.SlugField(max_length=500,null=True,unique=True,blank = True)

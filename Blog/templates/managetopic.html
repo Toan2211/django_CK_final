@@ -24,18 +24,15 @@
                 <th colspan="2">Action</th>
             </thead>
             <tbody>
+                {%for post in posts%}
                 <tr>
-                    <td>1</td>
-                    <td>Toan1</td>
+                    <td>{{post.title}}</td>
+                    <td>{{i.author}}</td>
                     <td><a href="#" class="edit">Edit</a></td>
                     <td><a href="#" class="delete">Delete</a></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Toan2</td>
-                    <td><a href="#" class="edit">Edit</a></td>
-                    <td><a href="#" class="delete">Delete</a></td>
-                </tr>
+                {% endfor %}
+
                 
             </tbody>
             </table>

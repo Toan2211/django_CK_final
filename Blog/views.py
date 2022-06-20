@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render 
 from django.http import HttpResponse
+from requests import request
 # Create your views here.
 from .models import *
 from django.contrib import auth
@@ -7,7 +8,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from math import ceil
-
+from .forms import *
+from django.conf import settings
 
 def BASE(request):
     return render(request,'base.html')
@@ -27,7 +29,31 @@ def INDEX(request):
         'topic':topic,
     }
     return render(request,'index.html',context)
-
+  
+def addPost(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            Post = form.save(commit=False)
+            Post.save()
+            return redirect('manage_post')
+    else:
+        form = PostForm()
+    return render(request,'addPost.html',{'form':form})
+def editPost(request,pk):
+    post = Post.objects.get(pk=pk)
+    if(request.method == 'POST'):
+        form = PostForm(request.POST, instance=post)
+        if(form.is_valid()):
+            form.save()
+        return redirect('manage_post')
+    else:
+        form = PostForm(instance=post)  
+    return render(request,'addPost.html',{'form':form})
+def deletePost(request,pk):
+    Post.objects.get(pk=pk).delete()
+    return redirect('manage_post')
+  
 
 class Login(View):
     @login_required(login_url='login')
@@ -82,11 +108,12 @@ class Single(View):
     def post(self,request):
         pass
 
-class AddPost(View):
-    def get(self,request):
-        return render(request,'addPost.html')
-    def post(self,request):
-        pass
+# class AddPost(request):
+#     def get(self,request):
+
+#         return render(request,'addPost.html')
+#     def post(self,request): 
+#         return render(request,'addPost.html')
 
 class ManageTopic(View):
     def get(self,request):
@@ -96,7 +123,9 @@ class ManageTopic(View):
 
 class ManagePost(View):
     def get(self,request):
-        return render(request,'managepost.html')
+        posts = Post.objects.all()
+        context = {'posts':posts}
+        return render(request,'managepost.html',context)
     def post(self,request):
         pass
 

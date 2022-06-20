@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Blog.apps.BlogConfig',
     'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -128,15 +128,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Tu codee
 import os
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 from ckeditor.configs import DEFAULT_CONFIG
 
-CKEDITOR_UPLOAD_PATH = "Blog/uploads/"
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
-CKEDITOR_THUMBNAIL_SIZE = (300, 300)
+CKEDITOR_THUMBNAIL_SIZE = (500, 300)
 CKEDITOR_IMAGE_QUALITY = 40
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_ALLOW_NONIMAGE_FILES = True
@@ -168,6 +169,7 @@ CUSTOM_TOOLBAR = [
 ]
 CKEDITOR_CONFIGS = {
     'default': {
+
         'toolbar': (
             ['div', 'Source', '-', 'Save', 'NewPage', 'Preview', '-', 'Templates'],
             ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
@@ -182,6 +184,8 @@ CKEDITOR_CONFIGS = {
             ['TextColor', 'BGColor'],
             ['Maximize', 'ShowBlocks', '-', 'About', 'pbckcode'],
         ),
+        'width': 'full',
+        'height':'800px',
     }
 }
 
