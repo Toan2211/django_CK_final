@@ -28,8 +28,8 @@
                 <tr>
                     <td>{{i.id}}</td>
                     <td>{{i.name}}</td>
-                    <td><a href="#" class="edit">Edit</a></td>
-                    <td><a href="#" class="delete">Delete</a></td>
+                    <td><a href="{% url 'edit_topic' i.id%}" class="edit">Edit</a></td>
+                    <td><a href="{% url 'delete_topic' i.id%}" class="delete">Delete</a></td>
                 </tr>
                 {% endfor %}
 

@@ -20,17 +20,7 @@
         </div>
         <i class="fa fa-bars menu-toggle"></i>
         <ul class="nav">
-            <li><a href="#">Home</a>
-            <ul>
-                <li><a href="{% url 'home' %}">Landing Page</a></li>
-                <li><a href="">Team</a></li>
-            </ul>
-            
-            </li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <!-- <li><a href="">Sign Up</a></li>
-            <li><a href="">Login</a></li> -->
+
             <li><a href="#">
                 <i class="fa fa-user"></i>
                 {% if request.user.is_authenticated %}
@@ -50,7 +40,7 @@
                 </ul>
             
             
-            </li>
+            </li> 
 
 
         </ul>
@@ -77,22 +67,7 @@
             </div>
         </div>
         <div class="footer-section links">
-            <div class="col">
-            <ul>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-            </ul>
-            </div>
-            <div class="col">
-            <ul>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-                <a href=""><li>Events</li></a>
-            </ul>
-            </div>
+
         </div>
         <div class="footer-section contact-form">
             <h2>Contact us</h2>

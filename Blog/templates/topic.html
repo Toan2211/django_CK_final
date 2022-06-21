@@ -21,7 +21,6 @@
             </div>
             {% endfor %}
             <div class="pagination">
-                
                 <li class="page-item previous-page {% if page == 1 %} disable {% endif %}"><a class = "page-link" href="{% url 'topic' pk previous %}">Prev</a></li>                
                 {% for i in page_list %}
                     {% if i == page %}
@@ -32,7 +31,6 @@
                 {% endfor %}
                 <li class="page-item next-page {% if page_list|length == page %} disable {% endif %}"><a class = "page-link" href="{% url 'topic' pk next %}">Next</a></li>
             </div>
-
 
         </div>
 

@@ -29,11 +29,36 @@ def GETUSER(request):
 def INDEX(request):
     trending_post = Post.objects.filter(section ='Trending').order_by('date')[0:4]
     popular_post = Post.objects.filter(section ='Popular').order_by('date')[0:5]
+    all_post = Post.objects.all()
+    pages = ceil((all_post.count()/5))
+    page_list = []
+    previous = 1
+    page = 1
+    next = 1
+    if page:
+        previous = page - 1
+        next = page + 1
+        if page <= pages:
+            for i in range(page-2,page+2):
+                if i >=1 and i <= pages:
+                    page_list.append(i)
+                if page < pages:
+                    all_post = all_post[int(page-1)*5:(page*5)]
+                else: all_post = all_post[int(page-1)*5:all_post.count()]
+        if previous<=0:
+            previous = 1
+        if next > pages:
+            next = pages
+    
     topic = Topic.objects.all()
     context ={
         'trending_post':trending_post,
         'popular_post':popular_post,
         'topic':topic,
+        'previous':previous,
+        'next':next,
+        'page_list':page_list,
+        'all_post':all_post,
     }
 
     return render(request,'index.html',context)
@@ -61,7 +86,29 @@ def editPost(request,pk):
 def deletePost(request,pk):
     Post.objects.get(pk=pk).delete()
     return redirect('manage_post')
-  
+def addTopic(request):
+    if request.method == 'POST':
+        form = TopicForm(request.POST,request.FILES)
+        if form.is_valid():
+            Topic = form.save(commit=False)
+            Topic.save()
+            return redirect('manage_topic')
+    else:
+        form = TopicForm()
+    return render(request,'addTopic.html',{'form':form})
+def editTopic(request,pk):
+    topic = Topic.objects.get(pk=pk)
+    if(request.method == 'POST'):
+        form = TopicForm(request.POST, instance=topic)
+        if(form.is_valid()):
+            form.save()
+        return redirect('manage_topic')
+    else:
+        form = TopicForm(instance=topic)  
+    return render(request,'addTopic.html',{'form':form})
+def deleteTopic(request,pk):
+    Topic.objects.get(pk=pk).delete()
+    return redirect('manage_topic')  
 
 class Login(View):
     def get(self,request):
@@ -214,8 +261,8 @@ class AddUser(LoginRequiredMixin,View):
             messages.success(request, "Thanh cong" )
             return render(request,'addUser.html')
 
-class TopicView(LoginRequiredMixin,View):
-    login_url = '/login/'
+class TopicView(View):
+    # login_url = '/login/'
     def get(self,request,pk,page=1):
         if type(pk) == int:
             tp = Topic.objects.filter(pk=pk).first()

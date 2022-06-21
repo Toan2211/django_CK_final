@@ -22,3 +22,11 @@ class PostForm(ModelForm):
             
 
         }
+class TopicForm(ModelForm):
+    class Meta:
+        model = Topic
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs= {'class':'text-inputckeditor'}),
+            'description': forms.Textarea(attrs= {'class':'text-inputckeditor'}),
+        }
