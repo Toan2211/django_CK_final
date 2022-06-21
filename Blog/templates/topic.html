@@ -13,9 +13,9 @@
                 <img src="{{i.fetured_image.url}}" alt="" class="post-img">
                 <div class="post-preview">
                     <h2><a href="{% url 'blog' i.id%}">{{i.title}}</a></h2>
-                    <i class="fa fa-user">{{i.author}}</i>
+                    <i class="fa fa-user"></i>  {{i.author}}
                     &nbsp;
-                    <i class="fa fa-calendar"> {{i.date}}</i>
+                    <i class="fa fa-calendar"></i>  {{i.date}}
                     <br>
                     <p class="">{{i.content | safe | truncatechars:200 }}</p>
                     <a href="{% url 'blog' i.id%}" class="btn read-more"> Read more</a>

@@ -24,5 +24,9 @@ urlpatterns = [
     path('topic/<int:pk>/<int:page>/',TopicView.as_view(),name='topic'),
     path('search/',Search.as_view(),name='search'),
     path('search/<int:page>',Search.as_view(),name='search'),
-    path('ckeditor/',include('ckeditor_uploader.urls'))
+    path('ckeditor/',include('ckeditor_uploader.urls')),
+    path('addTopic/',addTopic,name='add_topic'),
+    path('editTopic/<int:pk>',editTopic,name='edit_topic'),
+    path('deleteTopic/<int:pk>',deleteTopic,name='delete_topic'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

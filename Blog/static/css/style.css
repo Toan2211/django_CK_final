@@ -192,23 +192,27 @@ header ul li a:hover{
     border-top-right-radius: 5px;
 }
 .post-slider .post-wrapper .post .post-info{
+    margin-top: 16px;
     height: 130px;
 }
 .post-slider .post-wrapper .post .post-info h4{
     display: block;
     display: -webkit-box;
     max-width: 100%;
-    height: 34px;
+    height: 40px;
     margin: 0 auto;
-    font-size: 16 px;
+    font-size: 20 px;
     line-height: 1;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.post-slider .post-wrapper .post .post-info h4 a{
+    font-size: 18px;
+}
 .post-slider .post-wrapper .post .post-info i{
-    margin-top: 20px;
+    margin-top: 14px;
 }
 
 /* content  */

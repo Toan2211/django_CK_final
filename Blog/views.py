@@ -89,7 +89,30 @@ def editPost(request,pk):
 def deletePost(request,pk):
     Post.objects.get(pk=pk).delete()
     return redirect('manage_post')
-  
+def addTopic(request):
+    if request.method == 'POST':
+        form = TopicForm(request.POST,request.FILES)
+        if form.is_valid():
+            Topic = form.save(commit=False)
+            Topic.save()
+            return redirect('manage_topic')
+    else:
+        form = TopicForm()
+    return render(request,'addTopic.html',{'form':form})
+def editTopic(request,pk):
+    topic = Topic.objects.get(pk=pk)
+    if(request.method == 'POST'):
+        form = TopicForm(request.POST, instance=topic)
+        if(form.is_valid()):
+            form.save()
+        return redirect('manage_topic')
+    else:
+        form = TopicForm(instance=topic)  
+    return render(request,'addTopic.html',{'form':form})
+def deleteTopic(request,pk):
+    Topic.objects.get(pk=pk).delete()
+    return redirect('manage_topic')  
+     
 
 class Login(View):
     def get(self,request):
