@@ -1,3 +1,4 @@
+from importlib.resources import contents
 from django.shortcuts import redirect, render 
 from django.http import HttpResponse
 from requests import request
@@ -10,7 +11,7 @@ from django.views import View
 from math import ceil
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-
+from django.db.models.query import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
 from django.conf import settings
@@ -26,14 +27,41 @@ def GETUSER(request):
     if request.user:
         print(request.user)
 
-def INDEX(request):
-    trending_post = Post.objects.filter(section ='Trending').order_by('date')[0:4]
-    popular_post = Post.objects.filter(section ='Popular').order_by('date')[0:5]
+def INDEX(request,page=1):
+    rs = []
+    try:
+        rs =  Post.objects.filter(section ='Popular').order_by('-date')
+        pages = ceil((rs.count()/5))
+    except:
+        pages = 0
+    page_list = []
+    previous = 1
+    next = 1
+    if page:
+        previous = page - 1
+        next = page + 1
+        if page <= pages:
+            for i in range(page-2,page+2):
+                if i >=1 and i <= pages:
+                    page_list.append(i)
+            if page < pages:
+                rs = rs[int(page-1)*5:(page*5)]
+            else: rs = rs[int(page-1)*5:rs.count()]
+        if previous<=0:
+            previous = 1
+        if next > pages:
+            next = pages
+
+    trending_post = Post.objects.filter(section ='Trending').order_by('-date')[0:4]
     topic = Topic.objects.all()
     context ={
         'trending_post':trending_post,
-        'popular_post':popular_post,
+        'popular_post':rs,
         'topic':topic,
+        'page_list':page_list,
+        'previous':previous,
+        'next':next,
+        'page':page,
     }
 
     return render(request,'index.html',context)
@@ -128,6 +156,7 @@ class AddPost(LoginRequiredMixin,View):
         return render(request,'addPost.html')
     def post(self,request):
         pass
+
     
 # class ManageTopic(LoginRequiredMixin,View):
 #     login_url = '/login/'
@@ -214,8 +243,7 @@ class AddUser(LoginRequiredMixin,View):
             messages.success(request, "Thanh cong" )
             return render(request,'addUser.html')
 
-class TopicView(LoginRequiredMixin,View):
-    login_url = '/login/'
+class TopicView(View):
     def get(self,request,pk,page=1):
         if type(pk) == int:
             tp = Topic.objects.filter(pk=pk).first()
@@ -252,3 +280,89 @@ class TopicView(LoginRequiredMixin,View):
         return render(request,'topic.html',context)
     def post(self,request):
         return render(request,'addUser.html')
+
+
+class Search(View):
+    def get(self,request,page=1):
+        print(page)
+        search = request.session.get('search')
+        tp = Topic.objects.filter(name__icontains=search)
+        rs = []
+        try:
+            rs = Post.objects.filter(title__icontains=search) or Post.objects.filter(content__icontains=search) or Post.objects.filter(topic=tp)
+            pages = ceil((rs.count()/5))
+        except:
+            pages = 0
+        page_list = []
+        previous = 1
+        next = 1
+        if page:
+            previous = page - 1
+            next = page + 1
+            if page <= pages:
+                for i in range(page-2,page+2):
+                    if i >=1 and i <= pages:
+                        page_list.append(i)
+                if page < pages:
+                    rs = rs[int(page-1)*5:(page*5)]
+                else: rs = rs[int(page-1)*5:rs.count()]
+            if previous<=0:
+                previous = 1
+            if next > pages:
+                next = pages
+        searchs = search
+        if not pages:
+            searchs = "Không có kết quả phù hợp: "+search
+        context = {
+            'pk':1,
+            'page':page,
+            'rs':rs,
+            'title':searchs,
+            'previous':previous,
+            'next':next,
+            'page_list':page_list,
+            'topic': Topic.objects.all(),
+        }   
+        return render(request,'search.html',context)
+    def post(self,request,page=1):
+        
+        search = request.POST['search-term']
+        request.session['search'] = search
+        tp = Topic.objects.filter(name__icontains=search)
+        rs = []
+        try:
+            rs = Post.objects.filter(title__icontains=search) or Post.objects.filter(content__icontains=search) or Post.objects.filter(topic=tp)
+            pages = ceil((rs.count()/5))
+        except:
+            pages = 0
+        page_list = []
+        previous = 1
+        next = 1
+        if page:
+            previous = page - 1
+            next = page + 1
+            if page <= pages:
+                for i in range(page-2,page+2):
+                    if i >=1 and i <= pages:
+                        page_list.append(i)
+                if page < pages:
+                    rs = rs[int(page-1)*5:(page*5)]
+                else: rs = rs[int(page-1)*5:rs.count()]
+            if previous<=0:
+                previous = 1
+            if next > pages:
+                next = pages
+        searchs = search
+        if not pages:
+            searchs = "Không có kết quả phù hợp: "+search
+        context = {
+            'pk':1,
+            'page':page,
+            'rs':rs,
+            'title':searchs,
+            'previous':previous,
+            'next':next,
+            'page_list':page_list,
+            'topic': Topic.objects.all(),
+        }   
+        return render(request,'search.html',context)

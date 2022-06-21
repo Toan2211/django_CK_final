@@ -7,6 +7,7 @@ urlpatterns = [
     path('base/',BASE,name='base'),
     path('login/',Login.as_view(),name='login'),
     path('',INDEX,name='home'),
+    path('/<int:page>',INDEX,name='home'),
     path('register/',Register.as_view(),name='register'),
     # path('single/',Single.as_view(),name='single'),
     path('blog/<int:pk>',Single.as_view(),name='blog'),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('muser/',ManageUser.as_view(),name="manage_user"),
     path('topic/<int:pk>/',TopicView.as_view(),name='topic'),
     path('topic/<int:pk>/<int:page>/',TopicView.as_view(),name='topic'),
+    path('search/',Search.as_view(),name='search'),
+    path('search/<int:page>',Search.as_view(),name='search'),
     path('ckeditor/',include('ckeditor_uploader.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -47,14 +47,29 @@
             </div>
         </div>
         {% endfor %}
+        <div class="pagination">
+
+            <li class="page-item previous-page {% if page == 1 %} disable {% endif %}"><a class="page-link"
+                    href="{% url 'home' previous %}">Prev</a></li>
+            {% for i in page_list %}
+            {% if i == page %}
+            <li class="page-item current-page active"><a class="page-link selected"
+                    href="{% url 'home' i %}">{{i}}</a></li>
+            {% else %}
+            <li class="page-item current-page"><a class="page-link" href="{% url 'home' i %}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+            <li class="page-item next-page {% if page_list|length == page %} disable {% endif %}"><a
+                    class="page-link" href="{% url 'home' next %}">Next</a></li>
+        </div>
         </div>
 
         <div class="sidebar">
             <div class="section search">
                 <h2 class="section-title">Search</h2>
-                <form action="index.html" method="post">
-                    <input type="text" name="search-term" class="text-input" placeholder="Search....">
-        
+                <form action="{% url 'search' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="search-term" id="text-input" class="text-input" placeholder="Search....">
                 </form>
             </div>
             <div class="section topic">
