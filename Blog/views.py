@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render 
 from django.http import HttpResponse
+from requests import request
+# Create your views here.
 from .models import *
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
@@ -10,6 +12,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import *
+from django.conf import settings
 
 def BASE(request):
     return render(request,'base.html')
@@ -33,6 +37,31 @@ def INDEX(request):
     }
 
     return render(request,'index.html',context)
+  
+def addPost(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            Post = form.save(commit=False)
+            Post.save()
+            return redirect('manage_post')
+    else:
+        form = PostForm()
+    return render(request,'addPost.html',{'form':form})
+def editPost(request,pk):
+    post = Post.objects.get(pk=pk)
+    if(request.method == 'POST'):
+        form = PostForm(request.POST, instance=post)
+        if(form.is_valid()):
+            form.save()
+        return redirect('manage_post')
+    else:
+        form = PostForm(instance=post)  
+    return render(request,'addPost.html',{'form':form})
+def deletePost(request,pk):
+    Post.objects.get(pk=pk).delete()
+    return redirect('manage_post')
+  
 
 class Login(View):
     def get(self,request):
@@ -100,17 +129,33 @@ class AddPost(LoginRequiredMixin,View):
     def post(self,request):
         pass
     
+# class ManageTopic(LoginRequiredMixin,View):
+#     login_url = '/login/'
+# class AddPost(request):
+#     def get(self,request):
+
+#         return render(request,'addPost.html')
+#     def post(self,request): 
+#         return render(request,'addPost.html')
+
 class ManageTopic(LoginRequiredMixin,View):
     login_url = '/login/'
     def get(self,request):
-        return render(request,'managetopic.html')
+        topic = Topic.objects.all()
+        context ={
+            'topic':topic
+        }
+        return render(request,'managetopic.html',context)
     def post(self,request):
         pass
 
 class ManagePost(LoginRequiredMixin,View):
     login_url = '/login/'
     def get(self,request):
-        return render(request,'managepost.html')
+        user = request.user
+        posts = Post.objects.all()
+        context = {'posts':posts}
+        return render(request,'managepost.html',context)
     def post(self,request):
         pass
 
@@ -126,7 +171,7 @@ class AddTopic(LoginRequiredMixin,View):
             return HttpResponse('<h1>Loi<h1>')
         topic = Topic(name=title,description=description)
         topic.save()
-        messages.success("Thanh cong")
+        messages.success(request,"Thanh cong")
         return render(request,'addTopic.html')
         
 
@@ -134,7 +179,12 @@ class ManageUser(LoginRequiredMixin,View):
     login_url = '/login/'
     # @login_required(login_url='login')
     def get(self,request):
-        return render(request,'manageuser.html')
+        User = get_user_model() #Doesn't Work.
+        users = User.objects.all()
+        context={
+            'users': users
+        }
+        return render(request,'manageuser.html',context)
     def post(self,request):
         
         return render(request,'addTopic.html')

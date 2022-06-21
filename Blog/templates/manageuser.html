@@ -24,13 +24,15 @@
                 <th colspan="2">Action</th>
             </thead>
             <tbody>
+                {% for i in users %}
                 <tr>
-                    <td>1</td>
-                    <td>Toan1</td>
-                    <td>Admin</td>
+                    <td>{{i.id}}</td>
+                    <td>{{i.username}}</td>
+                    <td>{{i.permissions}}</td>
                     <td><a href="#" class="edit">Edit</a></td>
                     <td><a href="#" class="delete">Delete</a></td>
                 </tr>
+                {% endfor %}
                 <tr>
                     <td>2</td>
                     <td>Toan2</td>

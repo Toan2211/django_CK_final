@@ -24,18 +24,15 @@
                 <th colspan="2">Action</th>
             </thead>
             <tbody>
+                {%for i in topic %}
                 <tr>
-                    <td>1</td>
-                    <td>Toan1</td>
+                    <td>{{i.id}}</td>
+                    <td>{{i.name}}</td>
                     <td><a href="#" class="edit">Edit</a></td>
                     <td><a href="#" class="delete">Delete</a></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Toan2</td>
-                    <td><a href="#" class="edit">Edit</a></td>
-                    <td><a href="#" class="delete">Delete</a></td>
-                </tr>
+                {% endfor %}
+
                 
             </tbody>
             </table>
